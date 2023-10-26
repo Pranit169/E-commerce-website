@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart</title>
+</head>
+
+<body>
+    <h1>Shopping Cart</h1>
+    <ul id="cart-items">
+        Cart items will be displayed here
+    </ul>
+    <div id="total-bill">
+        Total: $<span id="total-amount">0.00</span>
+    </div>
+</body>
+<script>
+    // Retrieve cart data from localStorage
+    const cartData = JSON.parse(localStorage.getItem("cartData"));
+    const cartItems = document.getElementById("cart-items");
+    const totalAmount = document.getElementById("total-amount");
+
+    // Check if there's cart data to display
+    if (cartData) {
+        cartData.forEach(item => {
+            const li = document.createElement("li");
+            li.innerText = `${item.name} - $${item.price.toFixed(2)}`;
+            cartItems.appendChild(li);
+        });
+
+        // Calculate and display the total bill
+        const total = cartData.reduce((acc, item) => acc + item.price, 0);
+        totalAmount.textContent = total.toFixed(2);
+    }
+</script>
+
+</html>
